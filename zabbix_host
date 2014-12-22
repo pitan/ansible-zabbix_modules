@@ -366,7 +366,17 @@ class ZabbixHosts():
             self.module.fail_json(msg="Failed you have to select either DNS or IP")
 
         use_ip = 0 if self.i_dns else 1
-
+         
+         if not self.i_port:
+            if self.i_type == 1:
+               self.i_port = "10050"
+            elif self.i_type == 2:
+               self.i_port = "161"
+            elif self.i_type == 3:
+               self.i_port = "12345"
+            elif self.i_type == 4:
+               self.i_port = "623"
+         
         if interface_id:
             return [{"type":self.i_type, "main": self.i_main, "useip": use_ip, "ip": self.i_ip,
                      "dns": self.i_dns, "port": self.i_port, "interfaceid":interface_id}]
